@@ -5,22 +5,18 @@
 import requests as r
 import re
 from sys import argv
-
-def ByPas(url):
+from six.moves import urllib_parse, urllib_request
+def ByPas(url, referer=True):
 	print('\n[÷] Bypasing => '+url)
-	get_ = r.get(url,headers={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"})
-	if get_.status_code == 200:
-		try:
-			xe_ = re.search('<link \w+\=\"\w+" href\=\"(.*?)"',get_.text).group(1)
-			if 'duit.cc' in xe_:
-				_xi = re.search('rel\=\"noreferrer" href\=\"(.*?)"',get_.text).group(1).split('=')[1]
-				print('[÷] Succses  => '+_xi)
-			else:
-				print('[÷] Succses  => '+xe_)
-		except Exception as e:
-			print('--eror-- => '+str(e))
-	else:
-		exit('[÷] Failed Bypasing => '+url)
+	
+	u = urllib_parse.urlparse(url)
+	rurl = '{0}://{1}/'.format(u.scheme, u.netloc)
+	headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"}
+	if referer:
+		headers.update({'Referer': rurl})
+	get_ = r.get(url, headers=headers)
+	response_headers = get_.get_headers(as_dict=True)
+	print(response_headers)
 
 if __name__ == "__main__":
 	if len(argv) < 2:
