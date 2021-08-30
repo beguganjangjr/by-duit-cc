@@ -45,6 +45,17 @@ def get_packed_data(html):
             packed_data += jsunpack.unpack(match.group(1))
 
     return packed_data
+def sort_sources_list(sources):
+    if len(sources) > 1:
+        try:
+            sources.sort(key=lambda x: int(re.sub(r"\D", "", x[0])), reverse=True)
+        except:
+            print(r'Scrape sources sort failed |int(re.sub("\D", "", x[0])|')
+            try:
+                sources.sort(key=lambda x: re.sub("[^a-zA-Z]", "", x[0].lower()))
+            except:
+                print('Scrape sources sort failed |re.sub("[^a-zA-Z]", "", x[0].lower())|')
+    return sources
 
 def scrape_sources(html, result_blacklist=None, scheme='http', patterns=None, generic_patterns=True):
     if patterns is None:
