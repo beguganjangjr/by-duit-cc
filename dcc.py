@@ -25,7 +25,7 @@ def ByPas(url, referer=True):
 	print(cookie)
 	if cookie:
 		headers.update({'Cookie': cookie})
-	html = get_.content
+	html = get_.text
 	if not referer:
 		header.udpate({'Cookie': cookie})
 	headers.update({'Origin': rurl[:-1]})
@@ -34,6 +34,15 @@ def ByPas(url, referer=True):
 	
 	print(source_list)
 #	print(cookie)
+
+def get_packed_data(html):
+    packed_data = ''
+    for match in re.finditer(r'(eval\s*\(function.*?)</script>', html, re.DOTALL | re.I):
+        if jsunpack.detect(match.group(1)):
+            packed_data += jsunpack.unpack(match.group(1))
+
+    return packed_data
+
 def scrape_sources(html, result_blacklist=None, scheme='http', patterns=None, generic_patterns=True):
     if patterns is None:
         patterns = []
