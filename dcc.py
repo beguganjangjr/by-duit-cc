@@ -5,7 +5,10 @@
 import requests as r
 import re
 from sys import argv
+import six
 from six.moves import urllib_parse, urllib_request
+PY2 = six.PY2
+PY3 = six.PY3
 def ByPas(url, referer=True):
 	print('\n[÷] Bypasing => '+url)
 	result_blacklist = []
