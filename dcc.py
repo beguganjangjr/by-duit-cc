@@ -34,8 +34,8 @@ def ByPas(url, referer=True):
 	headers.update({'Origin': rurl[:-1]})
 	#print(html)
 	source_list = scrape_sources(html, result_blacklist, scheme, patterns, generic_patterns)
-	
-	print(f'source_list: {source_list}')
+	source = pick_source(source_list)
+	print(f'source_list: {source}')
 #	print(cookie)
 
 def get_packed_data(html):
@@ -45,6 +45,15 @@ def get_packed_data(html):
             packed_data += jsunpack.unpack(match.group(1))
 
     return packed_data
+def pick_source(sources, auto_pick=None):
+    if auto_pick is None:
+        auto_pick = True
+
+    if len(sources) == 1:
+        return sources[0][1]
+    elif len(sources) > 1:
+        if auto_pick:
+            return sources[0][1]
 def sort_sources_list(sources):
     if len(sources) > 1:
         try:
