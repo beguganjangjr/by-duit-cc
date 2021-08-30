@@ -72,7 +72,7 @@ def scrape_sources(html, result_blacklist=None, scheme='http', patterns=None, ge
 
         matches = zip(labels, streams) if six.PY2 else list(zip(labels, streams))
         if matches:
-            common.logger.log_debug('Scrape sources |%s| found |%s|' % (regex, matches))
+            print('Scrape sources |%s| found |%s|' % (regex, matches))
         return matches
 
     if result_blacklist is None:
@@ -96,7 +96,7 @@ def scrape_sources(html, result_blacklist=None, scheme='http', patterns=None, ge
 
     source_list = list(set(source_list))
 
-    common.logger.log(source_list)
+    print(source_list)
     source_list = sort_sources_list(source_list)
 
     return source_list
