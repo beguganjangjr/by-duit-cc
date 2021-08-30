@@ -25,7 +25,7 @@ def ByPas(url, referer=True):
 	get_ = r.get(url, headers=headers)
 	response_headers = get_.headers
 	cookie = response_headers.get('Set-Cookie', None)
-	print(cookie)
+	#print(cookie)
 	if cookie:
 		headers.update({'Cookie': cookie})
 	html = get_.text
@@ -35,7 +35,7 @@ def ByPas(url, referer=True):
 	#print(html)
 	source_list = scrape_sources(html, result_blacklist, scheme, patterns, generic_patterns)
 	
-	print(source_list)
+	print(f'source_list: {source_list}')
 #	print(cookie)
 
 def get_packed_data(html):
